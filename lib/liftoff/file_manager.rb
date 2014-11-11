@@ -31,12 +31,23 @@ module Liftoff
 
     private
 
+    def localizable_file(filename)
+      filename.end_with?('strings', 'xib', 'storyboard')
+    end
+
     def create_template_file(destination, template_path, project_config)
-      existing_content = existing_file_contents(destination)
-      move_template(template_path, destination, project_config)
-      append_original_file_contents(destination, existing_content)
+      file_destination = destination
+      if localizable_file(destination)
+        localizable_dir = 'Resources/Base.lproj'
+        FileUtils.mkdir_p(localizable_dir)
+        file_destination = localizable_dir + '/' + File.basename(destination)
+      end
+
+      existing_content = existing_file_contents(file_destination)
+      move_template(template_path, file_destination, project_config)
+      append_original_file_contents(file_destination, existing_content)
       if File.executable?(template_path)
-        File.chmod(0755, destination)
+        File.chmod(0755, file_destination)
       end
     end
 

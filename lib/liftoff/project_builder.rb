@@ -60,6 +60,13 @@ module Liftoff
 
     def link_file(raw_template_name, parent_group, path, target)
       rendered_template_name = string_renderer.render(raw_template_name)
+      
+      if localizable_file(rendered_template_name)
+        file = parent_group.new_file(xcode_project.root_path + "Resources/Base.lproj/" + rendered_template_name)
+        target.add_resources([file])
+        return
+      end
+        
       file = parent_group.new_file(rendered_template_name)
 
       if resource_file?(rendered_template_name)
@@ -89,6 +96,10 @@ module Liftoff
 
     def resource_file?(name)
       name.end_with?('xcassets')
+    end
+
+    def localizable_file(name)
+      name.end_with?('strings', 'xib', 'storyboard')
     end
 
     def template_file?(object)

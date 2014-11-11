@@ -25,6 +25,10 @@ module Liftoff
       xcode_project.new_group(name, path)
     end
 
+    def root_path
+      xcode_project.root_object.main_group.real_path
+    end
+
     def generate_scheme
       scheme = Xcodeproj::XCScheme.new
       scheme.add_build_target(app_target)
