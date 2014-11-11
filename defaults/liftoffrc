@@ -73,6 +73,8 @@ app_target_templates:
         - Main.storyboard
       - Nibs:
         - LaunchScreen.xib
+      - Strings:
+        - Localizable.strings
       - Other-Sources:
         - Info.plist
         - <%= project_name %>-Prefix.pch
@@ -92,6 +94,8 @@ app_target_templates:
           - Main.storyboard
         - Nibs:
           - LaunchScreen.xib
+        - Strings:
+          - Localizable.strings
         - Other-Sources:
           - Info.plist
 
